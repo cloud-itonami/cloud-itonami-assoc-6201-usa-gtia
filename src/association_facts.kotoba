@@ -1,9 +1,9 @@
 (ns association-facts
   (:export [main association-covered? entry-count entry-field topic-count topic by-topic-count by-topic-id]))
-(defn association-covered? [a :string] :i64 (string=? a "gtia"))
+(defn association-covered? [a :string] :bool (string=? a "gtia"))
 (defn entry-count [a :string] :i64 (if (association-covered? a) 2 0))
-(defn valid-entry? [a :string i :i64] :i64
-  (if (association-covered? a) (if (= i 0) 1 (if (= i 1) 1 0)) 0))
+(defn valid-entry? [a :string i :i64] :bool
+  (if (association-covered? a) (if (= i 0) true (if (= i 1) true false)) false))
 (defn entry-field [a :string i :i64 f :string] [:option :string]
   (if (valid-entry? a i)
     (if (= i 0)
